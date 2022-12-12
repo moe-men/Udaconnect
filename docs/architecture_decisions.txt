@@ -1,0 +1,12 @@
+Choices in architectural design
+———————————————-
+Three message passing strategies were used, specifically:
+RESTful APIs
+Queues for messages (Kafka)
+- gRPC
+
+In order to facilitate integration with the various HTTP routes, the frontend client makes use of REST APIs. REST was selected because it offers a comparatively high throughput in API performance and is the most basic method of message transfer that doesn't add needless complexity to our system.
+
+For the purpose of consuming a sizable amount of location data from the mobile devices, gRPC was selected as the message passing protocol. The decision was taken to take advantage of gRPC's enhanced performance, which includes less connection overhead and total payload size. By doing this, we can make sure that our system is capable of handling the massive amount of location data that will be provided from various mobile devices.
+
+The location ingester service manages the ingested location data using a message queue (Kafka). This will enable decoupling of our systems as well as enhanced performance and reliability (without losing imported data). Due to the advantages of the two message passing mechanisms, using the message queue along with gRPC for the ingestion of location data from the mobile device offers a variety of benefits. In order to deploy a robust distributed queue capable of handling high data volumes, we chose Kafka over alternative messaging queues like RabbitMQ.
